@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <form id="formz">
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Enter Name">
+            <input type="number" name="flag" placeholder="Enter Name" min="1" max="2">
+        </form>
+        
+        <p id="para" style="color: red;font-size: 25px;"></p>
+        <a href="requestmapper?url=profile"><button><strong>Profile</strong></button></a>
+        <a href="requestmapper?url=qrcode"><button><strong>QR - Code</strong></button></a>
+        <button id="submit">Submit</button>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+//                var formData = new FormData($('#formz')[0]);
+               $(document).on('click','#submit',function () {
+                   var name = $('input[name="name"]').val();
+                   var flag = $('input[name="flag"]').val();
+                   $.ajax({
+                        url:'dataProcessor',
+                        dataType: 'JSON',
+                        type:'POST',
+                        data:{name:name,flag:flag},
+                        success:function(data) {
+                            console.log(data);
+                            $('#para').css('color','green');
+                            $('#para').html(data);
+                        },
+                        error:function (error) {
+                            $('#para').css('color','red');
+                            $('#para').html(error.responseText);
+                        }
+                    });
+               }); 
+            });
+        </script>
+    </body>
+</html>
